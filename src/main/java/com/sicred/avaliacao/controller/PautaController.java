@@ -1,9 +1,15 @@
 package com.sicred.avaliacao.controller;
 
+import com.sicred.avaliacao.dto.PautaDTO;
+import com.sicred.avaliacao.mapper.PautaMapper;
 import com.sicred.avaliacao.model.Pauta;
+import com.sicred.avaliacao.service.PautaService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +17,16 @@ import java.util.List;
 @RequestMapping("/pautas")
 public class PautaController {
 
-    // POST: Criar uma nova pauta
+    @Autowired
+    private PautaService pautaService;
     @PostMapping
-    public ResponseEntity<Pauta> criarPauta(@RequestBody Pauta pauta) {
-        return ResponseEntity.ok(pauta);
+    public ResponseEntity<Pauta> criarPauta(@Valid @RequestBody PautaDTO pautaDTO) {
+        Pauta novaPauta = pautaService.criarPauta(pautaDTO);
+        return ResponseEntity.created(URI.create("/pautas/" + novaPauta.getPautaId())).body(novaPauta);
     }
 
-    // GET: Listar todas as pautas
     @GetMapping
     public ResponseEntity<List<Pauta>> listarPautas() {
-        return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.ok(pautaService.listarTodasPautas());
     }
 }
