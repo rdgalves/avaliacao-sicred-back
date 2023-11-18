@@ -27,8 +27,25 @@ CREATE TABLE SessaoVotacao (
     pauta_id INT REFERENCES Pauta(pauta_id), -- ID da pauta vinculada à sessão
     inicio TIMESTAMP NOT NULL,        -- Horário de início da sessão de votação
     duracao INT DEFAULT 1,            -- Duração da sessão em minutos
-    status VARCHAR(50) DEFAULT 'aberta' -- Estado da sessão (aberta ou fechada)
+    status VARCHAR(50) DEFAULT 'FECHADO' CHECK (status IN ('FECHADO', 'ABERTO')) -- Estado da sessão (FECHADO ou ABERTO)
 );
+
+CREATE OR REPLACE FUNCTION ajustar_campos()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.status IS NULL THEN
+        NEW.status := 'FECHADO';
+    END IF;
+    IF NEW.duracao IS NULL THEN
+        NEW.duracao := 1;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER ajustar_campos_antes_de_inserir
+BEFORE INSERT ON SessaoVotacao
+FOR EACH ROW EXECUTE FUNCTION ajustar_campos();
 
 COMMENT ON COLUMN SessaoVotacao.sessao_id IS 'Identificador único da sessão de votação';
 COMMENT ON COLUMN SessaoVotacao.pauta_id IS 'ID da pauta associada a esta sessão';

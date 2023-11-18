@@ -8,4 +8,6 @@ import java.util.List;
 public interface PautaService {
     Pauta criarPauta(PautaDTO pautaDTO);
     List<Pauta> listarTodasPautas();
+
+    Pauta buscarPautaPorId(Long id);
 }

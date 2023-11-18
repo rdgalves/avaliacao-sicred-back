@@ -23,14 +23,14 @@ public class SessaoVotacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sessaoId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pauta_id", nullable = false)
     private Pauta pauta;
 
     @Column(nullable = false)
     private LocalDateTime inicio;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "duracao")
     private Integer duracao;
 
     @Column(nullable = false)

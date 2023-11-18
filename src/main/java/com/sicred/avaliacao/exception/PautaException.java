@@ -3,13 +3,14 @@ package com.sicred.avaliacao.exception;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-public class ValidaPautaException extends BaseAvaliacaoException {
+public class PautaException extends BaseAvaliacaoException {
+
     private static final long serialVersionUID = 1L;
     private MessageSource messageSource;
     private String messageKey;
     private Object[] params;
 
-    public ValidaPautaException(MessageSource messageSource, String messageKey, Object... params) {
+    public PautaException(MessageSource messageSource, String messageKey, Object... params) {
         super();
         this.messageSource = messageSource;
         this.messageKey = messageKey;
