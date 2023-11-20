@@ -27,14 +27,14 @@ CREATE TABLE SessaoVotacao (
     pauta_id INT REFERENCES Pauta(pauta_id), -- ID da pauta vinculada à sessão
     inicio TIMESTAMP NOT NULL,        -- Horário de início da sessão de votação
     duracao INT DEFAULT 1,            -- Duração da sessão em minutos
-    status VARCHAR(50) DEFAULT 'FECHADO' CHECK (status IN ('FECHADO', 'ABERTO')) -- Estado da sessão (FECHADO ou ABERTO)
+    status VARCHAR(50) DEFAULT 'PENDENTE' CHECK (status IN ('FECHADO', 'ABERTO', 'PENDENTE')) -- Estado da sessão (PENDENTE, FECHADO ou ABERTO)
 );
 
 CREATE OR REPLACE FUNCTION ajustar_campos()
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.status IS NULL THEN
-        NEW.status := 'FECHADO';
+        NEW.status := 'PENDENTE';
     END IF;
     IF NEW.duracao IS NULL THEN
         NEW.duracao := 1;
@@ -51,7 +51,7 @@ COMMENT ON COLUMN SessaoVotacao.sessao_id IS 'Identificador único da sessão de
 COMMENT ON COLUMN SessaoVotacao.pauta_id IS 'ID da pauta associada a esta sessão';
 COMMENT ON COLUMN SessaoVotacao.inicio IS 'Timestamp de início da sessão de votação';
 COMMENT ON COLUMN SessaoVotacao.duracao IS 'Duração da sessão de votação em minutos';
-COMMENT ON COLUMN SessaoVotacao.status IS 'Estado atual da sessão (aberta/fechada)';
+COMMENT ON COLUMN SessaoVotacao.status IS 'Estado atual da sessão (pendente/aberta/fechada)';
 
 
 CREATE TABLE Voto (

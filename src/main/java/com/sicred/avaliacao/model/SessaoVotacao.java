@@ -1,5 +1,6 @@
 package com.sicred.avaliacao.model;
 
+import com.sicred.avaliacao.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,8 +34,9 @@ public class SessaoVotacao {
     @Column(nullable = false, name = "duracao")
     private Integer duracao;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private StatusEnum status;
 
     @OneToMany(mappedBy = "sessao")
     private List<Voto> votos;

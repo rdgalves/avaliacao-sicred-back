@@ -13,7 +13,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.sicred.avaliacao.mapper", "com.sicred.avaliacao.service", "com.sicred.avaliacao.controller", "com.sicred.avaliacao.repository", "com.sicred.avaliacao.advice"})
+@EnableScheduling
+@ComponentScan(basePackages = {"com.sicred.avaliacao.scheduler", "com.sicred.avaliacao.mapper", "com.sicred.avaliacao.service", "com.sicred.avaliacao.controller", "com.sicred.avaliacao.repository", "com.sicred.avaliacao.advice"})
 public class AvaliacaoApplication {
 
 	public static void main(String[] args) {

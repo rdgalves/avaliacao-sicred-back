@@ -8,4 +8,7 @@ import java.util.List;
 public interface SessaoVotacaoService {
     SessaoVotacao criarSessaoVotacao(SessaoVotacaoRequestDTO sessaoVotacaoRequestDTO);
     List<SessaoVotacao> listarTodasSessoes();
+    List<SessaoVotacao> encontrarSessoesParaAbrir();
+
+    List<SessaoVotacao> encontrarSessoesParaFechar();
 }

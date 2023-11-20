@@ -1,6 +1,7 @@
 package com.sicred.avaliacao.service.impl;
 
 import com.sicred.avaliacao.dto.SessaoVotacaoRequestDTO;
+import com.sicred.avaliacao.enums.StatusEnum;
 import com.sicred.avaliacao.exception.PautaException;
 import com.sicred.avaliacao.exception.SessaoVotacaoException;
 import com.sicred.avaliacao.mapper.SessaoVotacaoMapper;
@@ -15,6 +16,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,5 +73,26 @@ public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
                     LocaleContextHolder.getLocale()));
             throw new SessaoVotacaoException(messageSource, "sessao.pauta.cadastrada");
         }
+    }
+
+    public List<SessaoVotacao> encontrarSessoesParaAbrir() {
+        LocalDateTime agora = LocalDateTime.now();
+        return sessaoVotacaoRepository.findByInicioLessThanEqualAndStatus(agora, StatusEnum.PENDENTE);
+    }
+
+    public List<SessaoVotacao> encontrarSessoesParaFechar() {
+        LocalDateTime agora = LocalDateTime.now();
+        List<SessaoVotacao> sessoesParaFechar = new ArrayList<>();
+
+        List<SessaoVotacao> todasSessoes = sessaoVotacaoRepository.findByStatus(StatusEnum.ABERTO);
+        for (SessaoVotacao sessao : todasSessoes) {
+            //Sessão estipulada em minutos para maior praticidade na realização dos testes.
+            LocalDateTime fimSessao = sessao.getInicio().plusMinutes(sessao.getDuracao());
+            if (fimSessao.isBefore(agora)) {
+                sessoesParaFechar.add(sessao);
+            }
+        }
+
+        return sessoesParaFechar;
     }
 }
