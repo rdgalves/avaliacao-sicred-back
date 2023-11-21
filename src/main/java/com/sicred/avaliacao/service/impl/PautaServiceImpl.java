@@ -11,26 +11,32 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PautaServiceImpl implements PautaService {
     private final MessageSource messageSource;
     private final PautaRepository pautaRepository;
+    private final PautaMapper pautaMapper;
 
     @Autowired
-    public PautaServiceImpl(MessageSource messageSource, PautaRepository pautaRepository) {
+    public PautaServiceImpl(MessageSource messageSource, PautaRepository pautaRepository, PautaMapper pautaMapper) {
         this.messageSource = messageSource;
         this.pautaRepository = pautaRepository;
+        this.pautaMapper = pautaMapper;
     }
 
     @Override
     public Pauta criarPauta(PautaDTO pautaDTO) {
-        return pautaRepository.save(PautaMapper.INSTANCE.toEntity(pautaDTO));
+        return pautaRepository.save(pautaMapper.toEntity(pautaDTO));
     }
 
     @Override
-    public List<Pauta> listarTodasPautas() {
-        return pautaRepository.findAll();
+    public List<PautaDTO> listarTodasPautas() {
+        List<Pauta> pautas = pautaRepository.findAll();
+        return pautas.stream()
+                .map(pautaMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

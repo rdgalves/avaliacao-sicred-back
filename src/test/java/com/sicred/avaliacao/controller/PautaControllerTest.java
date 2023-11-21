@@ -32,16 +32,13 @@ class PautaControllerTest {
 
     @Test
     void criarPautaTest() {
-        // Preparação
         PautaDTO pautaDTO = new PautaDTO();
         Pauta pauta = new Pauta();
         pauta.setPautaId(1L);
         when(pautaService.criarPauta(pautaDTO)).thenReturn(pauta);
 
-        // Ação
         ResponseEntity<Pauta> resposta = pautaController.criarPauta(pautaDTO);
 
-        // Verificação
         assertNotNull(resposta);
         assertEquals(201, resposta.getStatusCodeValue());
         assertEquals(URI.create("/pautas/1"), resposta.getHeaders().getLocation());
@@ -50,16 +47,13 @@ class PautaControllerTest {
 
     @Test
     void listarPautasTest() {
-        // Preparação
-        Pauta pauta1 = new Pauta();
-        Pauta pauta2 = new Pauta();
-        List<Pauta> listaPautas = Arrays.asList(pauta1, pauta2);
+        PautaDTO pauta1 = new PautaDTO();
+        PautaDTO pauta2 = new PautaDTO();
+        List<PautaDTO> listaPautas = Arrays.asList(pauta1, pauta2);
         when(pautaService.listarTodasPautas()).thenReturn(listaPautas);
 
-        // Ação
-        ResponseEntity<List<Pauta>> resposta = pautaController.listarPautas();
+        ResponseEntity<List<PautaDTO>> resposta = pautaController.listarPautas();
 
-        // Verificação
         assertNotNull(resposta);
         assertEquals(200, resposta.getStatusCodeValue());
         assertEquals(2, resposta.getBody().size());

@@ -1,5 +1,6 @@
 package com.sicred.avaliacao.service.impl;
 
+import com.sicred.avaliacao.dto.SessaoVotacaoDTO;
 import com.sicred.avaliacao.dto.SessaoVotacaoRequestDTO;
 import com.sicred.avaliacao.enums.StatusEnum;
 import com.sicred.avaliacao.exception.PautaException;
@@ -13,12 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
@@ -30,23 +33,31 @@ public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
     private final SessaoVotacaoRepository sessaoVotacaoRepository;
     private final PautaService pautaService;
 
+    private final SessaoVotacaoMapper sessaoVotacaoMapper;
+
     @Autowired
-    public SessaoVotacaoServiceImpl(MessageSource messageSource, SessaoVotacaoRepository sessaoVotacaoRepository, PautaService pautaService) {
+    public SessaoVotacaoServiceImpl(MessageSource messageSource, SessaoVotacaoRepository sessaoVotacaoRepository, @Lazy PautaService pautaService, SessaoVotacaoMapper sessaoVotacaoMapper) {
         this.messageSource = messageSource;
         this.sessaoVotacaoRepository = sessaoVotacaoRepository;
         this.pautaService = pautaService;
+        this.sessaoVotacaoMapper = sessaoVotacaoMapper;
     }
+
+
 
     @Override
     public SessaoVotacao criarSessaoVotacao(SessaoVotacaoRequestDTO sessaoVotacaoDTO) {
         this.verificaSeExistePautaInformada(sessaoVotacaoDTO);
         this.verificarSeExisteSessaoParaPauta(sessaoVotacaoDTO);
-        return sessaoVotacaoRepository.save(SessaoVotacaoMapper.INSTANCE.toEntity(sessaoVotacaoDTO));
+        return sessaoVotacaoRepository.save(sessaoVotacaoMapper.toEntity(sessaoVotacaoDTO));
     }
 
     @Override
-    public List<SessaoVotacao> listarTodasSessoes() {
-        return sessaoVotacaoRepository.findAll();
+    public List<SessaoVotacaoDTO> listarTodasSessoes() {
+        List<SessaoVotacao> sessoes = sessaoVotacaoRepository.findAll();
+        return sessoes.stream()
+                .map(sessaoVotacaoMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     /**

@@ -24,7 +24,7 @@ COMMENT ON COLUMN Pauta.descricao IS 'Descrição detalhada da pauta';
 
 CREATE TABLE SessaoVotacao (
     sessao_id SERIAL PRIMARY KEY,     -- ID único para cada sessão de votação
-    pauta_id INT REFERENCES Pauta(pauta_id), -- ID da pauta vinculada à sessão
+    pauta_id INT REFERENCES Pauta(pauta_id) NOT NULL, -- ID da pauta vinculada à sessão
     inicio TIMESTAMP NOT NULL,        -- Horário de início da sessão de votação
     duracao INT DEFAULT 1,            -- Duração da sessão em minutos
     status VARCHAR(50) DEFAULT 'PENDENTE' CHECK (status IN ('FECHADO', 'ABERTO', 'PENDENTE')) -- Estado da sessão (PENDENTE, FECHADO ou ABERTO)

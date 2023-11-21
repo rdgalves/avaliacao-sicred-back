@@ -28,7 +28,7 @@ public class Pauta {
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
-    @OneToMany(mappedBy = "pauta")
+    @OneToMany(mappedBy = "pauta", fetch = FetchType.LAZY)
     private List<SessaoVotacao> sessoes;
 
     @Override

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PautaService {
     Pauta criarPauta(PautaDTO pautaDTO);
-    List<Pauta> listarTodasPautas();
+    List<PautaDTO> listarTodasPautas();
 
     Pauta buscarPautaPorId(Long id);
 }

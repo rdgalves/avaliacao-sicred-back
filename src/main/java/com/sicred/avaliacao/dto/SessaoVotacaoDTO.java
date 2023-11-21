@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SessaoVotacaoResponseDTO {
+public class SessaoVotacaoDTO {
     @JsonProperty("sessaoId")
     private Long sessaoId;
 
