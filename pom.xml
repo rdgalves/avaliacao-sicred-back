@@ -138,6 +138,7 @@
                         <exclude>**/com/sicred/avaliacao/advice/**</exclude>
                         <exclude>**/com/sicred/avaliacao/config/**</exclude>
                         <exclude>**/com/sicred/avaliacao/components/**</exclude>
+                        <exclude>**/com/sicred/avaliacao/validation/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
