@@ -58,7 +58,7 @@ CREATE TABLE Voto (
     voto_id SERIAL PRIMARY KEY,       -- ID único para cada voto
     sessao_id INT REFERENCES SessaoVotacao(sessao_id), -- ID da sessão de votação
     associado_id INT REFERENCES Associado(associado_id), -- ID do associado votante
-    voto VARCHAR(3) CHECK (voto IN ('Sim', 'Não')) -- Valor do voto ('Sim' ou 'Não')
+    voto VARCHAR(3) CHECK (voto IN ('SIM', 'NAO')) -- Valor do voto ('Sim' ou 'Não')
 );
 
 COMMENT ON COLUMN Voto.voto_id IS 'Identificador único do voto';

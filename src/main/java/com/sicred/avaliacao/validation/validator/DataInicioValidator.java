@@ -1,5 +1,6 @@
-package com.sicred.avaliacao.validation;
+package com.sicred.avaliacao.validation.validator;
 
+import com.sicred.avaliacao.validation.DataInicioValida;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDateTime;

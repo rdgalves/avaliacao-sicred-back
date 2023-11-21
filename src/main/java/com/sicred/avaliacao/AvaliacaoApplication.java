@@ -14,7 +14,7 @@ import java.util.Locale;
 
 @SpringBootApplication
 @EnableScheduling
-@ComponentScan(basePackages = {"com.sicred.avaliacao.scheduler", "com.sicred.avaliacao.mapper", "com.sicred.avaliacao.service", "com.sicred.avaliacao.controller", "com.sicred.avaliacao.repository", "com.sicred.avaliacao.advice"})
+@ComponentScan(basePackages = {"com.sicred.avaliacao.scheduler", "com.sicred.avaliacao.mapper", "com.sicred.avaliacao.service", "com.sicred.avaliacao.service.impl", "com.sicred.avaliacao.controller", "com.sicred.avaliacao.repository", "com.sicred.avaliacao.advice"})
 public class AvaliacaoApplication {
 
 	public static void main(String[] args) {

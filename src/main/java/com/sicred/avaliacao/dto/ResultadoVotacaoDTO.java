@@ -8,9 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class ResultadoVotacaoDTO {
-    private Long sessaoId;
+    private Long pautaId;
     private Long totalVotosSim;
     private Long totalVotosNao;
-    private String resultado;
 }
 

@@ -10,6 +10,6 @@ public interface SessaoVotacaoService {
     SessaoVotacao criarSessaoVotacao(SessaoVotacaoRequestDTO sessaoVotacaoRequestDTO);
     List<SessaoVotacaoDTO> listarTodasSessoes();
     List<SessaoVotacao> encontrarSessoesParaAbrir();
-
     List<SessaoVotacao> encontrarSessoesParaFechar();
+    SessaoVotacao buscarSessaoPorId(Long id);
 }

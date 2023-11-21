@@ -85,6 +85,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-batch</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -139,6 +144,7 @@
                         <exclude>**/com/sicred/avaliacao/config/**</exclude>
                         <exclude>**/com/sicred/avaliacao/components/**</exclude>
                         <exclude>**/com/sicred/avaliacao/validation/**</exclude>
+                        <exclude>**/com/sicred/avaliacao/exception/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

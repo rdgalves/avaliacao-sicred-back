@@ -27,8 +27,6 @@ import java.util.stream.Collectors;
 public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
 
     private final Logger logger = LoggerFactory.getLogger(SessaoVotacaoService.class);
-
-
     private final MessageSource messageSource;
     private final SessaoVotacaoRepository sessaoVotacaoRepository;
     private final PautaService pautaService;
@@ -43,8 +41,6 @@ public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
         this.sessaoVotacaoMapper = sessaoVotacaoMapper;
     }
 
-
-
     @Override
     public SessaoVotacao criarSessaoVotacao(SessaoVotacaoRequestDTO sessaoVotacaoDTO) {
         this.verificaSeExistePautaInformada(sessaoVotacaoDTO);
@@ -58,32 +54,6 @@ public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
         return sessoes.stream()
                 .map(sessaoVotacaoMapper::toDTO)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Verifica se a pauta informada existe.
-     *
-     * @param sessaoVotacaoDTO DTO contendo o ID da pauta a ser verificada.
-     * @throws PautaException se a pauta não existir.
-     */
-    private void verificaSeExistePautaInformada(SessaoVotacaoRequestDTO sessaoVotacaoDTO) {
-        this.pautaService.buscarPautaPorId(sessaoVotacaoDTO.getPautaId());
-    }
-
-    /**
-     * Verifica se já existe uma sessão de votação para a pauta informada.
-     * @param sessaoVotacaoDTO DTO da sessão de votação contendo o ID da pauta.
-     * @throws PautaException se uma sessão para a pauta já está cadastrada.
-     */
-    private void verificarSeExisteSessaoParaPauta(SessaoVotacaoRequestDTO sessaoVotacaoDTO) {
-        Long pautaId = sessaoVotacaoDTO.getPautaId();
-        boolean sessaoExiste = sessaoVotacaoRepository.existsByPauta_PautaId(pautaId);
-        if (sessaoExiste) {
-            logger.error(messageSource.getMessage("log.sessao.pauta.cadastrada",
-                    new Object[] { pautaId },
-                    LocaleContextHolder.getLocale()));
-            throw new SessaoVotacaoException(messageSource, "sessao.pauta.cadastrada");
-        }
     }
 
     public List<SessaoVotacao> encontrarSessoesParaAbrir() {
@@ -105,5 +75,37 @@ public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
         }
 
         return sessoesParaFechar;
+    }
+
+    @Override
+    public SessaoVotacao buscarSessaoPorId(Long id) {
+        return this.sessaoVotacaoRepository.findById(id)
+                .orElseThrow(() -> new PautaException(messageSource, "sessao.nao_encontrada"));
+    }
+
+    /**
+     * Verifica se já existe uma sessão de votação para a pauta informada.
+     * @param sessaoVotacaoDTO DTO da sessão de votação contendo o ID da pauta.
+     * @throws PautaException se uma sessão para a pauta já está cadastrada.
+     */
+    private void verificarSeExisteSessaoParaPauta(SessaoVotacaoRequestDTO sessaoVotacaoDTO) {
+        Long pautaId = sessaoVotacaoDTO.getPautaId();
+        boolean sessaoExiste = sessaoVotacaoRepository.existsByPauta_PautaId(pautaId);
+        if (sessaoExiste) {
+            logger.error(messageSource.getMessage("log.sessao.pauta.cadastrada",
+                    new Object[] { pautaId },
+                    LocaleContextHolder.getLocale()));
+            throw new SessaoVotacaoException(messageSource, "sessao.pauta.cadastrada");
+        }
+    }
+
+    /**
+     * Verifica se a pauta informada existe.
+     *
+     * @param sessaoVotacaoDTO DTO contendo o ID da pauta a ser verificada.
+     * @throws PautaException se a pauta não existir.
+     */
+    private void verificaSeExistePautaInformada(SessaoVotacaoRequestDTO sessaoVotacaoDTO) {
+        this.pautaService.buscarPautaPorId(sessaoVotacaoDTO.getPautaId());
     }
 }

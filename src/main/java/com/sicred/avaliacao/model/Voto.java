@@ -1,10 +1,8 @@
 package com.sicred.avaliacao.model;
 
+import com.sicred.avaliacao.enums.SimNaoEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -13,6 +11,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "voto")
 public class Voto {
@@ -29,8 +28,9 @@ public class Voto {
     @JoinColumn(name = "associado_id", nullable = false)
     private Associado associado;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 3)
-    private String voto;
+    private SimNaoEnum voto;
 
     @Override
     public final boolean equals(Object o) {

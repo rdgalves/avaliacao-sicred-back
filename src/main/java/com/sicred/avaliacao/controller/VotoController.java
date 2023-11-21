@@ -2,26 +2,34 @@ package com.sicred.avaliacao.controller;
 
 import com.sicred.avaliacao.dto.ResultadoVotacaoDTO;
 import com.sicred.avaliacao.dto.VotoDTO;
-import com.sicred.avaliacao.model.SessaoVotacao;
-import com.sicred.avaliacao.model.Voto;
+import com.sicred.avaliacao.dto.VotoRequestDTO;
+import com.sicred.avaliacao.service.VotoService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/votos")
 public class VotoController {
 
-    // POST: Registrar um voto
-    @PostMapping
-    public ResponseEntity<Voto> registrarVoto(@RequestBody VotoDTO votoDto) {
-        return ResponseEntity.ok(new Voto());
+    private final VotoService votoService;
+
+    @Autowired
+    public VotoController(VotoService votoService) {
+        this.votoService = votoService;
     }
 
-    // GET: Contabilizar e mostrar o resultado da votação de uma sessão
-    @GetMapping("/resultado/{sessaoId}")
-    public ResponseEntity<ResultadoVotacaoDTO> resultadoVotacao(@PathVariable Long sessaoId) {
-        return ResponseEntity.ok(new ResultadoVotacaoDTO());
+    @PostMapping
+    public ResponseEntity<?> registrarVoto(@Valid @RequestBody VotoRequestDTO votoRequestDTO) {
+        votoService.registrarVoto(votoRequestDTO);
+        return ResponseEntity.ok("Voto enviado para processamento.");
+    }
+
+    @GetMapping("/resultado/{pautaId}")
+    public ResponseEntity<ResultadoVotacaoDTO> obterResultadoVotacao(@PathVariable Long pautaId) {
+        ResultadoVotacaoDTO resultado = votoService.contabilizarVotos(pautaId);
+        return ResponseEntity.ok(resultado);
     }
 }

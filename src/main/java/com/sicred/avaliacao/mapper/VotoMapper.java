@@ -8,8 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface VotoMapper {
 
-    VotoMapper INSTANCE = Mappers.getMapper(VotoMapper.class);
-
-    VotoDTO toDto(Voto voto);
     Voto toEntity(VotoDTO votoDto);
+
+    VotoDTO toDTO(Voto votoSalvo);
 }

@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "4b4a6ae8-b3d6-4ae9-81b3-b77ad338b24b",
+		"name": "sicred-avaliacao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1863015",
+		"_collection_link": "https://solar-moon-107223.postman.co/workspace/Odon~9a97f08f-dbf8-4701-bda8-0848f3d06196/collection/1863015-4b4a6ae8-b3d6-4ae9-81b3-b77ad338b24b?action=share&source=collection_link&creator=1863015"
+	},
+	"item": [
+		{
+			"name": "Criar Pauta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Título da Pauta\",\n    \"descricao\": \"Descrição da Pauta\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/pautas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pautas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Pautas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Título da Pauta\",\n    \"descricao\": \"Descrição da Pauta\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/pautas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pautas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Sessoes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Título da Pauta\",\n    \"descricao\": \"Descrição da Pauta\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/pautas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pautas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resultado votação",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Título da Pauta\",\n    \"descricao\": \"Descrição da Pauta\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/resultado/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resultado",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Sessao",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pautaId\": 7,\n    \"inicio\": \"2023-11-20T18:45:00\",\n    \"duracao\": 10\n\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sessoes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sessoes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Realizar Voto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cpf\": \"04055502192\",\n    \"email\": \"\",\n    \"nome\": \"Rodrigo\",\n    \"sessaoId\": \"1\",\n    \"voto\": \"Sim\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/votos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"votos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

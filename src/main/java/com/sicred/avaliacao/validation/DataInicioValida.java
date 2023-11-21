@@ -1,4 +1,5 @@
 package com.sicred.avaliacao.validation;
+import com.sicred.avaliacao.validation.validator.DataInicioValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.*;

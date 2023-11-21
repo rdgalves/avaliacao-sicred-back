@@ -1,15 +1,17 @@
 package com.sicred.avaliacao.dto;
 
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class VotoDTO {
-
-    private Long associadoId;   // ID do associado que está votando
-    private Long sessaoId;      // ID da sessão de votação na qual o voto está sendo feito
-    private String voto;        // Opção de voto ('Sim' ou 'Não')
+    private String cpf;
+    private Long sessaoId;
+    private String voto;
 }

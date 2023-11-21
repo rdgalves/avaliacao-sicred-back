@@ -1,8 +1,10 @@
 package com.sicred.avaliacao.advice;
 
 import com.sicred.avaliacao.dto.ApiErrorDTO;
+import com.sicred.avaliacao.exception.AssociadoException;
 import com.sicred.avaliacao.exception.PautaException;
 import com.sicred.avaliacao.exception.SessaoVotacaoException;
+import com.sicred.avaliacao.exception.VotoException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,42 @@ public class GlobalExceptionHandler {
                 request.getRequestURI());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PautaException.class)
+    public ResponseEntity<ApiErrorDTO> handlePautaException(HttpServletRequest request, PautaException ex) {
+        ApiErrorDTO response = new ApiErrorDTO(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Not Found",
+                ex.getMessage(),
+                request.getRequestURI());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AssociadoException.class)
+    public ResponseEntity<ApiErrorDTO> handleAssociadoException(HttpServletRequest request, AssociadoException ex) {
+        ApiErrorDTO response = new ApiErrorDTO(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request",
+                ex.getMessage(),
+                request.getRequestURI());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(VotoException.class)
+    public ResponseEntity<ApiErrorDTO> handleVotoException(HttpServletRequest request, VotoException ex) {
+        ApiErrorDTO response = new ApiErrorDTO(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request",
+                ex.getMessage(),
+                request.getRequestURI());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -56,15 +94,5 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(PautaException.class)
-    public ResponseEntity<ApiErrorDTO> handlePautaException(HttpServletRequest request, PautaException ex) {
-        ApiErrorDTO response = new ApiErrorDTO(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                "Not Found",
-                ex.getMessage(),
-                request.getRequestURI());
 
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
 }
